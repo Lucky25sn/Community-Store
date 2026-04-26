@@ -1,35 +1,30 @@
-<<<<<<< HEAD
-name: Website CI
+name: Deploy Website to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get code
-      uses: actions/checkout@v4
-
-    - name: Show files
-      run: ls
-=======
-name: Simple CI
-
-on:
-  push:
-    branches: [ "main" ]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show files
-        run: echo "CI is working!"
->>>>>>> 533dd63ec7762fd49df0b989e90ffc5c1ded2586
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+
+      - name: Deploy
+        uses: actions/deploy-pages@v4
