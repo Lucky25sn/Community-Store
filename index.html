@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusMarket – Your Campus Community Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#1a6b45;--green-mid:#2d8a5e;--green-light:#e8f5ee;--green-pale:#f0faf4;
+  --amber:#c8720a;--amber-light:#fff3e0;--amber-mid:#f59e0b;
+  --slate:#1c2b3a;--slate-mid:#2e4057;--slate-light:#f0f4f8;
+  --cream:#faf8f3;--warm-white:#fff9f0;
+  --text:#1c2b3a;--text-mid:#4a5568;--text-soft:#718096;
+  --red:#c0392b;--blue:#1a5276;
+  --border:#e2e8f0;--radius:10px;--radius-lg:16px;--radius-xl:24px;
+  --shadow:0 2px 16px rgba(28,43,58,0.08);--shadow-lg:0 8px 40px rgba(28,43,58,0.14);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{display:block}
+
+/* ── ANNOUNCEMENT BAR ── */
+.ann-bar{background:var(--slate);color:#fff;padding:9px 0;overflow:hidden;position:relative;z-index:200}
+.ann-track{display:flex;gap:60px;animation:marquee 28s linear infinite;white-space:nowrap;width:max-content}
+.ann-track span{font-size:12px;font-weight:500;letter-spacing:.3px;opacity:.9}
+.ann-track span b{color:var(--amber-mid)}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── NAV ── */
+nav{background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:150;box-shadow:0 1px 0 rgba(0,0,0,0.05)}
+.nav-wrap{max-width:1280px;margin:0 auto;padding:0 32px;height:70px;display:flex;align-items:center;gap:0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--green);cursor:pointer;flex-shrink:0;margin-right:32px}
+.logo-mark{width:38px;height:38px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:20px;height:20px;fill:#fff}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{padding:8px 14px;font-size:14px;font-weight:500;color:var(--text-mid);border-radius:8px;cursor:pointer;transition:.15s;white-space:nowrap;border:none;background:none}
+.nav-link:hover{background:var(--green-light);color:var(--green)}
+.nav-link.active{color:var(--green);background:var(--green-light)}
+.nav-search{flex:1;max-width:360px;margin:0 20px;position:relative}
+.nav-search input{width:100%;padding:10px 16px 10px 42px;border:1.5px solid var(--border);border-radius:50px;background:var(--slate-light);font-size:13.5px;outline:none;transition:.2s;color:var(--text);font-family:'Inter',sans-serif}
+.nav-search input:focus{border-color:var(--green);background:#fff;box-shadow:0 0 0 3px rgba(26,107,69,0.08)}
+.search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-soft);pointer-events:none}
+.nav-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nav-sell-btn{display:flex;align-items:center;gap:6px;padding:9px 20px;background:var(--green);color:#fff;border-radius:50px;font-size:13.5px;font-weight:600;cursor:pointer;border:none;transition:.15s;white-space:nowrap}
+.nav-sell-btn:hover{background:var(--green-mid)}
+.nav-icon{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:.15s;flex-shrink:0}
+.nav-icon:hover{border-color:var(--green);background:var(--green-light)}
+.nav-icon svg{width:18px;height:18px;stroke:var(--text-mid);fill:none;stroke-width:1.8}
+.badge{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;font-size:9px;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+
+/* ── CAT BAR ── */
+.cat-bar{background:#fff;border-bottom:1px solid var(--border);overflow:hidden}
+.cat-inner{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.cat-inner::-webkit-scrollbar{display:none}
+.cat-btn{display:flex;align-items:center;gap:7px;padding:12px 18px;font-size:13px;font-weight:500;color:var(--text-mid);border:none;background:none;cursor:pointer;white-space:nowrap;transition:.15s;border-bottom:2.5px solid transparent}
+.cat-btn:hover{color:var(--green)}
+.cat-btn.active{color:var(--green);border-bottom-color:var(--green);font-weight:600}
+.cat-btn .ico{font-size:15px}
+
+/* ── HERO ── */
+.hero{position:relative;height:580px;overflow:hidden}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(28,43,58,0.82) 0%,rgba(28,43,58,0.45) 60%,transparent 100%)}
+.hero-content{position:relative;z-index:2;height:100%;display:flex;align-items:center;max-width:1280px;margin:0 auto;padding:0 32px}
+.hero-text{max-width:580px}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(200,114,10,0.2);border:1px solid rgba(200,114,10,0.35);color:#fbbf24;padding:5px 14px;border-radius:50px;font-size:12px;font-weight:600;margin-bottom:20px;letter-spacing:.4px}
+.hero-text h1{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:18px}
+.hero-text h1 span{color:#6ee7b7}
+.hero-text p{color:rgba(255,255,255,0.82);font-size:16px;line-height:1.7;margin-bottom:30px;max-width:440px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{padding:13px 28px;background:var(--green);color:#fff;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--green-mid);transform:translateY(-1px)}
+.btn-outline-white{padding:12px 26px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.5);border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;transition:.15s}
+.btn-outline-white:hover{border-color:#fff;background:rgba(255,255,255,0.1)}
+.hero-stats{display:flex;gap:28px;margin-top:36px}
+.hero-stat{text-align:center}
+.hero-stat strong{display:block;font-size:24px;font-weight:800;color:#fff}
+.hero-stat span{font-size:11px;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:.5px}
+
+/* ── SCROLLING TICKER ── */
+.ticker{background:var(--green);padding:13px 0;overflow:hidden}
+.ticker-track{display:flex;gap:40px;animation:marquee 22s linear infinite;white-space:nowrap;width:max-content}
+.ticker-item{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.92)}
+.ticker-item .dot{width:5px;height:5px;background:#6ee7b7;border-radius:50%}
+
+/* ── PROMO CARDS ── */
+.promo-section{max-width:1280px;margin:40px auto 0;padding:0 32px;display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:16px}
+.promo-card{border-radius:var(--radius-lg);overflow:hidden;position:relative;cursor:pointer}
+.promo-card img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.promo-card:hover img{transform:scale(1.04)}
+.promo-card.big{height:320px}
+.promo-card.sm{height:152px}
+.promo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.65) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+.promo-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,0.7);margin-bottom:4px}
+.promo-title{font-size:17px;font-weight:700;color:#fff;line-height:1.3}
+.promo-cta{margin-top:8px;font-size:12px;color:#6ee7b7;font-weight:600}
+.promo-right{display:flex;flex-direction:column;gap:16px}
+
+/* ── SECTION WRAPPER ── */
+.section{max-width:1280px;margin:52px auto 0;padding:0 32px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px}
+.sec-head-left h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--text)}
+.sec-head-left p{font-size:14px;color:var(--text-soft);margin-top:4px}
+.see-all{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--green);cursor:pointer;border:none;background:none;padding:8px 16px;border-radius:50px;border:1.5px solid var(--green-light);transition:.15s}
+.see-all:hover{background:var(--green-light)}
+
+/* ── PRODUCT GRID ── */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.product-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:.2s;border:1px solid var(--border);position:relative}
+.product-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.product-img-wrap{position:relative;width:100%;height:210px;overflow:hidden;background:var(--slate-light)}
+.product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.product-card:hover .product-img-wrap img{transform:scale(1.06)}
+.product-img-wrap .emoji-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;background:linear-gradient(135deg,#f0f4f8,#e8f5ee)}
+.p-badge{position:absolute;top:10px;left:10px;padding:4px 10px;border-radius:50px;font-size:10px;font-weight:700;letter-spacing:.3px}
+.pb-sale{background:#fff3e0;color:#c8720a}
+.pb-new{background:#e8f5ee;color:var(--green)}
+.pb-hot{background:#fce4e4;color:var(--red)}
+.p-fav{position:absolute;top:10px;right:10px;width:32px;height:32px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:14px;transition:.15s;opacity:0}
+.product-card:hover .p-fav{opacity:1}
+.p-fav:hover{background:#fff;transform:scale(1.15)}
+.p-body{padding:14px 16px}
+.p-seller{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-soft);margin-bottom:5px}
+.p-seller-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.p-name{font-size:14px;font-weight:600;line-height:1.35;margin-bottom:8px;color:var(--text)}
+.p-price-row{display:flex;align-items:baseline;gap:8px}
+.p-price{font-size:20px;font-weight:800;color:var(--green)}
+.p-orig{font-size:12px;color:var(--text-soft);text-decoration:line-through}
+.p-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.p-rating{font-size:12px;color:var(--text-mid);display:flex;align-items:center;gap:4px}
+.stars{color:#f59e0b;font-size:11px}
+.add-cart{width:34px;height:34px;background:var(--green);color:#fff;border:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;transition:.15s;flex-shrink:0}
+.add-cart:hover{background:var(--green-mid);transform:scale(1.08)}
+
+/* ── BANNER AD ── */
+.banner-ad{max-width:1280px;margin:52px auto 0;padding:0 32px}
+.banner-inner{background:linear-gradient(135deg,var(--slate) 0%,var(--slate-mid) 100%);border-radius:var(--radius-xl);padding:0;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;position:relative;min-height:220px}
+.banner-text{padding:40px 44px;display:flex;flex-direction:column;justify-content:center;z-index:2;position:relative}
+.banner-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--amber-mid);margin-bottom:10px}
+.banner-text h2{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:12px}
+.banner-text p{color:rgba(255,255,255,0.7);font-size:14px;line-height:1.6;margin-bottom:24px}
+.banner-img{position:relative;overflow:hidden}
+.banner-img img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.banner-img::before{content:'';position:absolute;left:0;top:0;bottom:0;width:120px;background:linear-gradient(to right,var(--slate),transparent);z-index:1}
+
+/* ── STATS STRIP ── */
+.stats-strip{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:52px}
+.stats-inner{max-width:1280px;margin:0 auto;padding:28px 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;divide-x:1px solid var(--border)}
+.stat-item{text-align:center;padding:0 24px;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-ico{font-size:28px;margin-bottom:8px}
+.stat-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--text);line-height:1}
+.stat-lbl{font-size:12px;color:var(--text-soft);margin-top:5px;text-transform:uppercase;letter-spacing:.4px}
+
+/* ── BULLETIN BOARD ── */
+.bulletin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.bul-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;display:flex;gap:14px;transition:.2s;cursor:pointer}
+.bul-card:hover{box-shadow:var(--shadow);border-color:transparent}
+.bul-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bul-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.bul-title{font-size:14px;font-weight:700;margin-bottom:5px;color:var(--text)}
+.bul-desc{font-size:12.5px;color:var(--text-soft);line-height:1.55}
+.bul-meta{display:flex;gap:8px;margin-top:10px;font-size:11px;color:var(--text-soft);align-items:center}
+.bul-dot{width:3px;height:3px;background:var(--border);border-radius:50%}
+
+/* ── VENDORS ── */
+.vendor-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.v-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px 18px;text-align:center;cursor:pointer;transition:.2s}
+.v-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:transparent}
+.v-avatar{width:60px;height:60px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.v-name{font-size:14px;font-weight:700;margin-bottom:3px}
+.v-type{font-size:11.5px;color:var(--text-soft);margin-bottom:10px}
+.v-stats{display:flex;justify-content:center;gap:12px;font-size:11.5px;color:var(--text-mid)}
+
+/* ── IMAGE COLLAGE ── */
+.collage-section{max-width:1280px;margin:52px auto 0;padding:0 32px}
+.collage-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:200px 200px;gap:12px}
+.collage-item{border-radius:var(--radius-lg);overflow:hidden;position:relative}
+.collage-item img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.collage-item:hover img{transform:scale(1.06)}
+.collage-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+.collage-item:nth-child(5){grid-column:span 2}
+.collage-label{position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,0.55);color:#fff;padding:4px 10px;border-radius:50px;font-size:11px;font-weight:600}
+
+/* ── SELL PAGE ── */
+.sell-hero{background:linear-gradient(135deg,var(--green) 0%,var(--green-mid) 100%);padding:60px 32px;text-align:center;color:#fff}
+.sell-hero h1{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;margin-bottom:12px}
+.sell-hero p{font-size:16px;opacity:.85;max-width:500px;margin:0 auto 28px}
+.sell-form-wrap{max-width:660px;margin:40px auto;padding:0 32px}
+.form-card{background:#fff;border-radius:var(--radius-xl);padding:36px;box-shadow:var(--shadow)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:18px}
+.form-label{display:block;font-size:13px;font-weight:600;color:var(--text-mid);margin-bottom:6px}
+.form-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;outline:none;transition:.2s;font-family:'Inter',sans-serif;background:#fff;color:var(--text)}
+.form-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(26,107,69,0.08)}
+textarea.form-input{resize:vertical}
+select.form-input{cursor:pointer}
+.file-zone{border:2px dashed var(--border);border-radius:12px;padding:36px;text-align:center;cursor:pointer;transition:.2s;margin-bottom:18px}
+.file-zone:hover{border-color:var(--green);background:var(--green-pale)}
+.file-zone .fz-ico{font-size:36px;margin-bottom:10px}
+.file-zone .fz-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+.file-zone .fz-sub{font-size:12.5px;color:var(--text-soft)}
+.price-wrap{position:relative}
+.price-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--text-soft)}
+.price-wrap .form-input{padding-left:32px}
+.submit-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif}
+.submit-btn:hover{background:var(--green-mid)}
+
+/* ── PROFILE PAGE ── */
+.profile-banner{background:linear-gradient(135deg,var(--slate) 0%,#1a3a52 100%);padding:40px 32px;color:#fff}
+.profile-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:24px}
+.p-avatar{width:80px;height:80px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;border:3px solid rgba(255,255,255,0.3);flex-shrink:0}
+.p-name{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:4px}
+.p-role-chip{display:inline-block;background:rgba(110,231,183,0.2);border:1px solid rgba(110,231,183,0.4);color:#6ee7b7;padding:3px 12px;border-radius:50px;font-size:12px;font-weight:600;margin-bottom:6px}
+.p-email{font-size:13px;opacity:.7}
+.prof-content{max-width:1280px;margin:0 auto;padding:32px 32px 60px}
+.tab-row{display:flex;gap:4px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.tab-btn{padding:11px 20px;border:none;background:none;font-size:14px;font-weight:500;color:var(--text-soft);cursor:pointer;border-bottom:2.5px solid transparent;transition:.15s;white-space:nowrap;font-family:'Inter',sans-serif}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green);font-weight:600}
+
+/* ── AUTH MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;backdrop-filter:blur(6px);align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.auth-modal{background:#fff;border-radius:var(--radius-xl);width:92%;max-width:440px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.2)}
+.auth-top{background:linear-gradient(135deg,var(--green),var(--green-mid));padding:32px;text-align:center;color:#fff}
+.auth-top h2{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:6px}
+.auth-top p{font-size:13px;opacity:.82}
+.auth-tabs{display:flex;border-bottom:1px solid var(--border)}
+.auth-tab{flex:1;padding:14px;text-align:center;font-size:14px;font-weight:600;cursor:pointer;border:none;background:none;color:var(--text-soft);border-bottom:2.5px solid transparent;transition:.15s;font-family:'Inter',sans-serif}
+.auth-tab.active{color:var(--green);border-bottom-color:var(--green)}
+.auth-body{padding:24px}
+.auth-close{position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.2);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
+
+/* ── CART ── */
+.cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:400;backdrop-filter:blur(4px)}
+.cart-overlay.open{display:block}
+.cart-drawer{position:fixed;right:0;top:0;height:100%;width:400px;background:#fff;z-index:401;box-shadow:-12px 0 60px rgba(0,0,0,0.15);display:flex;flex-direction:column;transform:translateX(105%);transition:.3s cubic-bezier(.4,0,.2,1)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-hdr{padding:22px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--slate)}
+.cart-hdr h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff}
+.cart-x{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.cart-x:hover{background:rgba(255,255,255,0.25)}
+.cart-body{flex:1;overflow-y:auto;padding:16px 24px}
+.c-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.c-item-img{width:64px;height:64px;border-radius:10px;overflow:hidden;background:var(--slate-light);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.c-item-img img{width:100%;height:100%;object-fit:cover}
+.c-info{flex:1}
+.c-name{font-size:14px;font-weight:600;margin-bottom:3px;color:var(--text)}
+.c-price{font-size:14px;font-weight:700;color:var(--green)}
+.c-qty{display:flex;align-items:center;gap:8px;margin-top:7px}
+.qty-btn{width:26px;height:26px;border-radius:7px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--text-mid);transition:.1s}
+.qty-btn:hover{border-color:var(--green);color:var(--green)}
+.qty-n{font-size:13px;font-weight:700;min-width:22px;text-align:center}
+.c-rm{background:none;border:none;color:var(--text-soft);font-size:12px;cursor:pointer;margin-left:auto}
+.c-rm:hover{color:var(--red)}
+.cart-ftr{padding:18px 24px;border-top:1px solid var(--border)}
+.cart-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-soft);padding:4px 0}
+.cart-total{font-size:16px;font-weight:800;color:var(--text);border-top:1px solid var(--border);margin-top:8px;padding-top:12px}
+.checkout-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;margin-top:14px;transition:.15s;font-family:'Inter',sans-serif}
+.checkout-btn:hover{background:var(--green-mid)}
+.cart-empty{text-align:center;padding:60px 20px}
+.cart-empty .e-ico{font-size:54px;margin-bottom:14px}
+.cart-empty p{font-size:14px;color:var(--text-soft);line-height:1.6}
+
+/* ── PRODUCT MODAL ── */
+.prod-modal{background:#fff;border-radius:var(--radius-xl);width:92%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,0.2);position:relative}
+.pm-img{width:100%;height:300px;overflow:hidden;border-radius:var(--radius-xl) var(--radius-xl) 0 0;position:relative}
+.pm-img img{width:100%;height:100%;object-fit:cover}
+.pm-img .pm-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:90px;background:linear-gradient(135deg,var(--slate-light),var(--green-pale))}
+.pm-body{padding:24px 28px 28px}
+.pm-badge-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.pm-tag{background:var(--slate-light);color:var(--text-mid);padding:4px 12px;border-radius:50px;font-size:12px}
+.pm-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.pm-price{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--green)}
+.pm-orig{font-size:15px;color:var(--text-soft);text-decoration:line-through}
+.pm-seller{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-soft);margin-bottom:16px}
+.pm-seller-chip{background:var(--green-light);color:var(--green);padding:3px 12px;border-radius:50px;font-weight:600;font-size:12px}
+.pm-desc{font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:20px}
+.pm-actions{display:flex;gap:10px}
+.pm-add{flex:1;padding:13px;background:var(--green);color:#fff;border:none;border-radius:50px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif}
+.pm-add:hover{background:var(--green-mid)}
+.pm-wish{width:46px;height:46px;border-radius:50%;border:2px solid var(--border);background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
+.pm-wish:hover{border-color:var(--red);background:#fff5f5}
+.pm-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.45);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:5}
+
+/* ── TOAST ── */
+.toasts{position:fixed;bottom:28px;right:28px;z-index:1000;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{background:#fff;border-left:4px solid var(--green);padding:14px 18px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.14);font-size:13.5px;display:flex;align-items:center;gap:10px;min-width:260px;animation:tIn .3s ease;pointer-events:all}
+.toast.warn{border-left-color:var(--amber)}
+.toast.err{border-left-color:var(--red)}
+@keyframes tIn{from{transform:translateX(110%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ── PAGE STATE ── */
+.page{display:none}
+.page.active{display:block}
+
+/* ── FOOTER ── */
+footer{background:var(--slate);color:#fff;margin-top:60px;padding:60px 32px 24px}
+.footer-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand .f-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:280px}
+.footer-social{display:flex;gap:10px;margin-top:18px}
+.f-soc{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:.15s}
+.f-soc:hover{background:var(--green)}
+.footer-col h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:9px;transition:.15s;cursor:pointer}
+.footer-col a:hover{color:#fff}
+.footer-bottom{max-width:1280px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,0.35);flex-wrap:wrap;gap:10px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .promo-section{grid-template-columns:1fr 1fr}
+  .promo-card.big{grid-column:span 2;height:260px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .collage-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+  .collage-item:nth-child(1){grid-column:span 2;grid-row:span 1}
+  .collage-item:nth-child(5){grid-column:span 2}
+  .banner-inner{grid-template-columns:1fr}
+  .banner-img{height:200px}
+  .hero-text h1{font-size:36px}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .nav-wrap{padding:0 16px}
+  .hero{height:480px}
+  .hero-text h1{font-size:30px}
+  .hero-stats{gap:18px}
+  .promo-section{grid-template-columns:1fr;padding:0 16px}
+  .promo-card.big{grid-column:1;height:240px}
+  .promo-right{flex-direction:row}
+  .promo-card.sm{height:160px;flex:1}
+  .section{padding:0 16px}
+  .stats-inner{grid-template-columns:1fr 1fr;padding:20px 16px}
+  .footer-grid{grid-template-columns:1fr;gap:28px;padding:0 0 28px}
+  .cart-drawer{width:100%}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="ann-bar">
+  <div class="ann-track" id="annTrack"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-wrap">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M2 3h20v2H2V3zm0 3.5h20v2H2v-2zm0 3.5h14v2H2v-2zm0 3.5h14v2H2v-2zm15.5-.5l6 6-6 6v-3.5h-4.5v-5H17.5v-3.5z"/></svg>
+      </div>
+      CampusMarket
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="showPage('home');setActive(this)">Home</button>
+      <button class="nav-link" onclick="showPage('bulletin');setActive(this)">Bulletin</button>
+      <button class="nav-link" onclick="showPage('vendors');setActive(this)">Vendors</button>
+      <button class="nav-link" onclick="showPage('sell');setActive(this)">Sell</button>
+      <button class="nav-link" onclick="showPage('profile');setActive(this)">My Account</button>
+    </div>
+    <div class="nav-search">
+      <span class="search-ico">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </span>
+      <input type="text" id="searchInput" placeholder="Search listings, vendors, services…" oninput="handleSearch(this.value)">
+    </div>
+    <div class="nav-actions">
+      <button class="nav-sell-btn" onclick="showPage('sell')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Sell Now
+      </button>
+      <div class="nav-icon" onclick="toggleCart()" title="Cart">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+        <span class="badge" id="cartCount" style="display:none">0</span>
+      </div>
+      <div class="nav-icon" onclick="showAuth()" title="Account">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- CAT BAR -->
+<div class="cat-bar">
+  <div class="cat-inner" id="catBar">
+    <button class="cat-btn active" onclick="filterCat('All',this)"><span class="ico">🏠</span>All</button>
+    <button class="cat-btn" onclick="filterCat('Textbooks',this)"><span class="ico">📚</span>Textbooks</button>
+    <button class="cat-btn" onclick="filterCat('Electronics',this)"><span class="ico">💻</span>Electronics</button>
+    <button class="cat-btn" onclick="filterCat('Clothing',this)"><span class="ico">👕</span>Clothing</button>
+    <button class="cat-btn" onclick="filterCat('Food',this)"><span class="ico">🍽️</span>Food & Drinks</button>
+    <button class="cat-btn" onclick="filterCat('Services',this)"><span class="ico">🔧</span>Services</button>
+    <button class="cat-btn" onclick="filterCat('Stationery',this)"><span class="ico">✏️</span>Stationery</button>
+    <button class="cat-btn" onclick="filterCat('Sports',this)"><span class="ico">⚽</span>Sports</button>
+    <button class="cat-btn" onclick="filterCat('Furniture',this)"><span class="ico">🪑</span>Furniture</button>
+    <button class="cat-btn" onclick="filterCat('Art',this)"><span class="ico">🎨</span>Art & Crafts</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ HOME PAGE ═══════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO with video background -->
+  <div class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80">
+      <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+    </video>
+    <!-- fallback bg -->
+    <div style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80');background-size:cover;background-position:center"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-tag">🎓 Trusted Campus Community</div>
+        <h1>Buy. Sell. <span>Connect.</span><br>On Campus.</h1>
+        <p>The smartest way for students, faculty, vendors and residents to trade — right here on your campus.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="document.getElementById('searchInput').focus()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            Browse Listings
+          </button>
+          <button class="btn-outline-white" onclick="showPage('sell')">Start Selling Free →</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>2,340</strong><span>Listings</span></div>
+          <div class="hero-stat"><strong>1,820</strong><span>Members</span></div>
+          <div class="hero-stat"><strong>148</strong><span>Vendors</span></div>
+          <div class="hero-stat"><strong>4.8★</strong><span>Rating</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCROLLING TICKER -->
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <!-- PROMO CARDS -->
+  <div class="promo-section">
+    <div class="promo-card big">
+      <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&q=80" alt="Textbooks">
+      <div class="promo-overlay">
+        <div class="promo-cat">Featured Category</div>
+        <div class="promo-title">Pre-loved Textbooks<br>Up to 60% Off</div>
+        <div class="promo-cta">Shop Now →</div>
+      </div>
+    </div>
+    <div class="promo-right">
+      <div class="promo-card sm">
+        <img src="https://images.unsplash.com/photo-1588702547954-4800f4f7f30a?w=600&q=80" alt="Tech">
+        <div class="promo-overlay">
+          <div class="promo-cat">Electronics</div>
+          <div class="promo-title">Student Tech Deals</div>
+          <div class="promo-cta">Explore →</div>
+        </div>
+      </div>
+      <div class="promo-card sm">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Food">
+        <div class="promo-overlay">
+          <div class="promo-cat">Food & Drinks</div>
+          <div class="promo-title">Campus Eats & Treats</div>
+          <div class="promo-cta">Order Now →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED LISTINGS -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-head-left">
+        <h2>Featured Listings</h2>
+        <p>Hand-picked deals from verified campus sellers</p>
+      </div>
+      <button class="see-all">View All Listings →</button>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+
+  <!-- BANNER AD -->
+  <div class="banner-ad">
+    <div class="banner-inner">
+      <div class="banner-text">
+        <div class="banner-label">🔥 Limited Time Offer</div>
+        <h2>Sell Your Items.<br>Keep 100% Profit.</h2>
+        <p>No commission. No hidden fees. Just list, sell and get paid directly. Join 1,800+ active sellers on CampusMarket.</p>
+        <button class="btn-primary" onclick="showPage('sell')" style="width:max-content">
+          Create Free Listing →
+        </button>
+      </div>
+      <div class="banner-img">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=80" alt="Sell on CampusMarket">
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-ico">🛍️</div><div class="stat-num">2,340</div><div class="stat-lbl">Active Listings</div></div>
+      <div class="stat-item"><div class="stat-ico">👥</div><div class="stat-num">1,820</div><div class="stat-lbl">Verified Users</div></div>
+      <div class="stat-item"><div class="stat-ico">🏪</div><div class="stat-num">148</div><div class="stat-lbl">Local Vendors</div></div>
+      <div class="stat-item"><div class="stat-ico">⭐</div><div class="stat-num">4.8</div><div class="stat-lbl">Avg. Rating</div></div>
+    </div>
+  </div>
+
+  <!-- IMAGE COLLAGE -->
+  <div class="collage-section">
+    <div class="sec-head">
+      <div class="sec-head-left"><h2>Life on Campus</h2><p>Real moments, real community</p></div>
+    </div>
+    <div class="collage-grid">
+      <div class="collage-item">
+        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800&q=80" alt="Campus life">
+        <span class="collage-label">📍 Main Campus</span>
+      </div>
+      <div class="collage-item">
+        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&q=80" alt="Study">
+        <span class="collage-label">📚 Study Spots</span>
+      </div>
+      <div class="collage-item">
+        <img src="https://images.unsplash.com/photo-1574634534894-89d7576c8259?w=500&q=80" alt="Devices">
+        <span class="collage-label">💻 Tech Hub</span>
+      </div>
+      <div class="collage-item">
+        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&q=80" alt="Books">
+        <span class="collage-label">📖 Book Exchange</span>
+      </div>
+      <div class="collage-item">
+        <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&q=80" alt="Food">
+        <span class="collage-label">🍽️ Campus Food</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BULLETIN PREVIEW -->
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-head-left"><h2>Community Bulletin</h2><p>Events, announcements & campus news</p></div>
+      <button class="see-all" onclick="showPage('bulletin')">All Posts →</button>
+    </div>
+    <div class="bulletin-grid" id="bulletinPreview"></div>
+  </div>
+
+  <!-- VENDORS -->
+  <div class="section" style="margin-bottom:60px">
+    <div class="sec-head">
+      <div class="sec-head-left"><h2>Top Vendors</h2><p>Verified businesses serving your campus</p></div>
+      <button class="see-all" onclick="showPage('vendors')">All Vendors →</button>
+    </div>
+    <div class="vendor-strip" id="vendorPreview"></div>
+  </div>
+
+</div><!-- end home page -->
+
+<!-- ═══════════════════ BULLETIN PAGE ═══════════════════ -->
+<div class="page" id="page-bulletin">
+  <div style="background:linear-gradient(135deg,#1c2b3a,#2e4057);padding:52px 32px;text-align:center;color:#fff">
+    <h1 style="font-family:'Syne',sans-serif;font-size:38px;font-weight:800;margin-bottom:10px">Community Bulletin Board</h1>
+    <p style="color:rgba(255,255,255,0.7);font-size:15px;max-width:480px;margin:0 auto">Stay up to date with events, announcements and services from your campus community.</p>
+  </div>
+  <div class="section" style="padding-top:36px;padding-bottom:60px">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:20px">
+      <button class="nav-sell-btn" onclick="toast('Post feature coming soon!','📌')">+ New Post</button>
+    </div>
+    <div class="bulletin-grid" id="bulletinFull"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ VENDORS PAGE ═══════════════════ -->
+<div class="page" id="page-vendors">
+  <div style="background:var(--green);padding:52px 32px;text-align:center;color:#fff">
+    <h1 style="font-family:'Syne',sans-serif;font-size:38px;font-weight:800;margin-bottom:10px">Verified Vendors</h1>
+    <p style="color:rgba(255,255,255,0.8);font-size:15px">148 active vendors serving your campus this week</p>
+  </div>
+  <div class="section" style="padding-top:36px;padding-bottom:60px">
+    <div class="vendor-strip" id="vendorsFull"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SELL PAGE ═══════════════════ -->
+<div class="page" id="page-sell">
+  <div class="sell-hero">
+    <h1>List Your Item Free</h1>
+    <p>Reach thousands of campus buyers. No commission. Publish in under 3 minutes.</p>
+    <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;font-size:14px;color:rgba(255,255,255,0.8)">
+      <span>✓ Free to list</span><span>✓ No commission</span><span>✓ Direct payment</span><span>✓ Campus buyers</span>
+    </div>
+  </div>
+  <div class="sell-form-wrap">
+    <div class="form-card">
+      <h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px">Create Listing</h2>
+      <p style="font-size:13px;color:var(--text-soft);margin-bottom:24px">Fill in the details below to publish your listing.</p>
+      <div class="file-zone" onclick="toast('Image upload coming soon!','📷')">
+        <div class="fz-ico">📷</div>
+        <div class="fz-title">Upload Photos</div>
+        <div class="fz-sub">Click to add up to 6 images · JPG, PNG, WEBP</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Listing Title *</label>
+        <input class="form-input" id="listTitle" placeholder="e.g. Introduction to Engineering Textbook — 3rd Ed.">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Category *</label>
+          <select class="form-input" id="listCat">
+            <option value="">Select category…</option>
+            <option>Textbooks</option><option>Electronics</option><option>Clothing</option>
+            <option>Food</option><option>Services</option><option>Stationery</option>
+            <option>Sports</option><option>Furniture</option><option>Art</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Condition *</label>
+          <select class="form-input" id="listCond">
+            <option>New</option><option>Like New</option><option>Good</option><option>Fair</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Price (ZAR) *</label>
+        <div class="price-wrap">
+          <span class="price-prefix">R</span>
+          <input class="form-input" id="listPrice" type="number" placeholder="0.00">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-input" id="listDesc" rows="4" placeholder="Describe your item — edition, condition, any extras included…"></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitListing()">Publish Listing 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PROFILE PAGE ═══════════════════ -->
+<div class="page" id="page-profile">
+  <div class="profile-banner">
+    <div class="profile-inner">
+      <div class="p-avatar" id="profileIni">?</div>
+      <div>
+        <div class="p-name" id="profileName">Guest User</div>
+        <div class="p-role-chip" id="profileRole">Not signed in</div>
+        <div class="p-email" id="profileEmail">Sign in to access your account</div>
+      </div>
+    </div>
+  </div>
+  <div class="prof-content">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="profileTab('listings',this)">My Listings</button>
+      <button class="tab-btn" onclick="profileTab('purchases',this)">Purchases</button>
+      <button class="tab-btn" onclick="profileTab('wishlist',this)">Wishlist</button>
+      <button class="tab-btn" onclick="profileTab('settings',this)">Settings</button>
+    </div>
+    <div id="profileContent" style="color:var(--text-soft);font-size:14px;line-height:1.7">
+      Please sign in to view your account details.
+    </div>
+  </div>
+</div>
+
+<!-- CART OVERLAY + DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-hdr">
+    <h2>Shopping Cart <span id="cartHdrCount" style="font-size:13px;font-weight:400;opacity:.7"></span></h2>
+    <button class="cart-x" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-ftr" id="cartFtr"></div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="prodModalOverlay" onclick="closeProdModal(event)">
+  <div class="prod-modal" id="prodModal">
+    <button class="pm-close" onclick="document.getElementById('prodModalOverlay').classList.remove('open')">✕</button>
+    <div class="pm-img" id="pmImg"></div>
+    <div class="pm-body">
+      <div class="pm-badge-row" id="pmBadges"></div>
+      <div class="pm-price-row"><span class="pm-price" id="pmPrice"></span><span class="pm-orig" id="pmOrig"></span></div>
+      <div class="pm-seller" id="pmSeller"></div>
+      <p class="pm-desc" id="pmDesc"></p>
+      <div class="pm-actions">
+        <button class="pm-add" id="pmAddBtn">Add to Cart</button>
+        <button class="pm-wish" onclick="toast('Added to wishlist!','❤️')">♡</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authOverlay" onclick="closeAuth(event)">
+  <div class="auth-modal" style="position:relative">
+    <div class="auth-top">
+      <h2>Welcome to CampusMarket</h2>
+      <p>Your trusted campus buy & sell platform</p>
+      <button class="auth-close" onclick="document.getElementById('authOverlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="authSwitch('login',this)">Sign In</button>
+      <button class="auth-tab" onclick="authSwitch('register',this)">Register</button>
+    </div>
+    <div class="auth-body" id="authBody"></div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toasts" id="toastContainer"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="f-logo">
+        <div class="logo-mark"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M2 3h20v2H2V3zm0 3.5h20v2H2v-2zm0 3.5h14v2H2v-2zm0 3.5h14v2H2v-2z"/></svg></div>
+        CampusMarket
+      </div>
+      <p>A trusted community marketplace connecting students, faculty, vendors and residents on campus.</p>
+      <div class="footer-social">
+        <div class="f-soc">🐦</div>
+        <div class="f-soc">📘</div>
+        <div class="f-soc">📸</div>
+        <div class="f-soc">🎵</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Marketplace</h4>
+      <a onclick="showPage('home')">Browse All</a>
+      <a onclick="showPage('sell')">Sell an Item</a>
+      <a onclick="showPage('vendors')">Vendors</a>
+      <a onclick="showPage('bulletin')">Bulletin Board</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a onclick="toast('Help centre coming soon','ℹ️')">Help Centre</a>
+      <a onclick="toast('Safety guide loaded','🔒')">Safety Tips</a>
+      <a onclick="toast('Report submitted','🚩')">Report Listing</a>
+      <a onclick="toast('Message sent!','✉️')">Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a>Terms of Service</a>
+      <a>Privacy Policy</a>
+      <a>Cookie Policy</a>
+      <a>Community Rules</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CampusMarket · Built for community, powered by trust</span>
+    <span>🔒 Secure · ✓ Verified · Free Listings</span>
+  </div>
+</footer>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const PRODUCTS = [
+  {id:1,name:"Introduction to Engineering (3rd Ed.)",seller:"Sipho M.",verified:true,price:120,original:250,category:"Textbooks",emoji:"📚",img:"https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=500&q=75",badge:"Sale",rating:4.8,reviews:24,desc:"Well-maintained textbook with minimal highlights. Perfect for first-year Engineering students. Includes practice problems booklet.",tags:["3rd Edition","Engineering","Paperback"]},
+  {id:2,name:"HP 14 Laptop — 8GB RAM",seller:"TechHub Store",verified:true,price:4800,original:null,category:"Electronics",emoji:"💻",img:"https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=500&q=75",badge:"Hot",rating:4.6,reviews:38,desc:"Refurbished HP laptop in excellent working condition. Windows 11 installed. Ideal for students. 6-month warranty included.",tags:["Laptop","Refurbished","Windows 11"]},
+  {id:3,name:"Campus Hoodie — University Merch",seller:"Campus Shop",verified:true,price:280,original:350,category:"Clothing",emoji:"👕",img:"https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=500&q=75",badge:"Sale",rating:4.9,reviews:15,desc:"Official university hoodie in navy blue. Unisex sizing. Available in S, M, L, XL. Machine washable.",tags:["Hoodie","University","Unisex"]},
+  {id:4,name:"Calculus Tutor — 2 hrs/week",seller:"Amara N.",verified:true,price:150,original:null,category:"Services",emoji:"🔢",img:"https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500&q=75",badge:"New",rating:5.0,reviews:9,desc:"Final-year Maths student offering private tutoring sessions. Calculus, Linear Algebra & Statistics. Online or in person.",tags:["Tutoring","Math","Online"]},
+  {id:5,name:"Sony WF-C500 Wireless Earbuds",seller:"Lerato K.",verified:false,price:680,original:900,category:"Electronics",emoji:"🎧",img:"https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=75",badge:"Sale",rating:4.4,reviews:12,desc:"Like-new Sony wireless earbuds. IPX4 water resistant. 20hr battery. Comes with original case and tips.",tags:["Sony","Audio","Wireless"]},
+  {id:6,name:"Homemade Bunny Chow — Daily Orders",seller:"Mama J's Kitchen",verified:true,price:45,original:null,category:"Food",emoji:"🍛",img:"https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&q=75",badge:"Hot",rating:4.9,reviews:87,desc:"Authentic Durban bunny chow made fresh daily. Chicken, bean, or lamb. Order by 10am for lunch delivery on campus.",tags:["Food","Lunch","Delivery"]},
+  {id:7,name:"Wacom Intuos Drawing Tablet (S)",seller:"Zanele P.",verified:true,price:550,original:800,category:"Electronics",emoji:"🖊️",img:"https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=500&q=75",badge:"Sale",rating:4.7,reviews:6,desc:"Wacom Intuos small drawing tablet. Works with Photoshop and Illustrator. Great for design and art students.",tags:["Wacom","Design","Art"]},
+  {id:8,name:"A4 Lever Arch File Bundle (x5)",seller:"Stationery Corner",verified:true,price:95,original:null,category:"Stationery",emoji:"📂",img:"https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=500&q=75",badge:"New",rating:4.5,reviews:20,desc:"Pack of 5 heavy duty A4 lever arch files. Assorted colours. Perfect for organising your semester notes.",tags:["Stationery","Files","Bundle"]},
+  {id:9,name:"Vintage Acoustic Guitar",seller:"Drummond Arts",verified:true,price:750,original:1200,category:"Art",emoji:"🎸",img:"https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=500&q=75",badge:"Sale",rating:4.6,reviews:4,desc:"Entry-level acoustic guitar in great condition. Comes with carry bag and extra strings. Great for beginners.",tags:["Guitar","Music","Acoustic"]},
+  {id:10,name:"Nike Football Boots — Size 9",seller:"Sports Zone",verified:true,price:320,original:520,category:"Sports",emoji:"⚽",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=75",badge:"Sale",rating:4.7,reviews:11,desc:"Nike Mercurial Vapor boots, size 9 UK. Used for one season, excellent grip. Great for campus league games.",tags:["Nike","Football","Size 9"]},
+  {id:11,name:"LED Desk Lamp — Dimmable USB",seller:"HomeBase Essentials",verified:true,price:185,original:null,category:"Furniture",emoji:"💡",img:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&q=75",badge:"New",rating:4.8,reviews:18,desc:"Modern LED desk lamp with 3 brightness levels and USB-A charging port. Energy efficient and eye-friendly.",tags:["LED","Furniture","Study"]},
+  {id:12,name:"Python Crash Course — 2nd Ed.",seller:"Book Exchange Hub",verified:true,price:90,original:180,category:"Textbooks",emoji:"🐍",img:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=500&q=75",badge:"Sale",rating:4.7,reviews:32,desc:"Python Crash Course, 2nd Edition. Excellent condition. Ideal for Computer Science first and second year students.",tags:["Python","CS","Coding"]},
+];
+
+const BULLETINS = [
+  {icon:"📅",type:"Event",typeColor:"#1a6b45",iconBg:"#e8f5ee",title:"End-of-Year Campus Market",desc:"Join us on 20 June at Quad B for our biggest swap & sell event. Live music, food stalls & prizes!",author:"Student Union",date:"15 Apr 2026"},
+  {icon:"📢",type:"Announcement",typeColor:"#c8720a",iconBg:"#fff3e0",title:"New Payment Gateway Live",desc:"CampusMarket now supports SnapScan and PayFast. All transactions are encrypted and buyer-protected.",author:"Admin",date:"12 Apr 2026"},
+  {icon:"🔧",type:"Service",typeColor:"#1a5276",iconBg:"#e6f1fb",title:"Laptop Repair — Walk-ins Welcome",desc:"TechHub Store offers same-day screen replacements, RAM upgrades and OS installs. Located at Block D.",author:"TechHub Store",date:"10 Apr 2026"},
+  {icon:"🎉",type:"Social",typeColor:"#7b2d8b",iconBg:"#f5e6fa",title:"Photography Club — Weekly Meetup",desc:"All skill levels welcome. Bring your camera or phone. We meet Wednesdays at 5pm in Room 204.",author:"Photo Society",date:"9 Apr 2026"},
+  {icon:"📚",type:"Announcement",typeColor:"#c8720a",iconBg:"#fff3e0",title:"Textbook Donation Drive — Week 4",desc:"Donate old textbooks and earn CampusMarket credits. Drop-off points at Library, Block A & Res Hall.",author:"Sustainability Dept.",date:"8 Apr 2026"},
+  {icon:"🏃",type:"Event",typeColor:"#1a6b45",iconBg:"#e8f5ee",title:"Campus 5K Fun Run — Register Now",desc:"Sign up for the annual charity fun run. R30 entry fee goes to the student bursary fund. Prizes for top 3!",author:"Sports Committee",date:"7 Apr 2026"},
+];
+
+const VENDORS = [
+  {name:"TechHub Store",type:"Electronics & Repair",emoji:"💻",color:"#1c3a52",listings:24,rating:4.8},
+  {name:"Campus Shop",type:"University Apparel",emoji:"👕",color:"#1a6b45",listings:18,rating:4.9},
+  {name:"Mama J's Kitchen",type:"Food & Catering",emoji:"🍛",color:"#c8720a",listings:7,rating:4.9},
+  {name:"Book Exchange Hub",type:"Textbooks & Stationery",emoji:"📚",color:"#1a5276",listings:35,rating:4.7},
+  {name:"Stationery Corner",type:"Office Supplies",emoji:"✏️",color:"#7b4f12",listings:42,rating:4.6},
+  {name:"Sports Zone",type:"Sporting Goods",emoji:"⚽",color:"#2d5016",listings:29,rating:4.7},
+  {name:"Drummond Arts",type:"Art & Instruments",emoji:"🎨",color:"#6b2d6b",listings:11,rating:4.8},
+  {name:"HomeBase Essentials",type:"Furniture & Décor",emoji:"🪑",color:"#2e4057",listings:16,rating:4.5},
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let cart = [];
+let currentUser = null;
+let activeCat = 'All';
+let currentProd = null;
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function init() {
+  buildAnnBar();
+  buildTicker();
+  renderProducts(PRODUCTS, 'productGrid');
+  renderBulletin(BULLETINS.slice(0,4), 'bulletinPreview');
+  renderBulletin(BULLETINS, 'bulletinFull');
+  renderVendors(VENDORS, 'vendorPreview');
+  renderVendors(VENDORS, 'vendorsFull');
+  updateCart();
+  buildAuthForm('login');
+}
+
+function buildAnnBar() {
+  const msgs = [
+    '🎉 <b>End-of-Year Campus Market</b> — 20 June at Quad B',
+    '🔒 <b>New:</b> SnapScan & PayFast payments now live',
+    '📚 <b>Textbook Donation Drive</b> — earn credits!',
+    '🚀 <b>Free Listings</b> — no commission, no fees',
+    '⭐ <b>4.8/5</b> average rating from 1,820+ users',
+    '🏪 <b>148 verified vendors</b> active this week',
+  ];
+  const double = [...msgs,...msgs];
+  document.getElementById('annTrack').innerHTML = double.map(m=>`<span>${m}</span>`).join('');
+}
+
+function buildTicker() {
+  const items = [
+    '📚 Textbooks from R90','💻 Laptops from R2,800','👕 Campus Hoodies from R280',
+    '🍛 Bunny Chow R45','🎧 Earbuds from R680','✏️ Stationery bundles from R95',
+    '⚽ Sports gear from R320','🎸 Guitars from R750','💡 Desk lamps from R185',
+    '🔢 Tutors from R150/hr','📱 Free Listings — Sell Now',
+  ];
+  const double = [...items,...items];
+  document.getElementById('tickerTrack').innerHTML = double.map(i=>`<div class="ticker-item"><span class="dot"></span>${i}</div>`).join('');
+}
+
+// ── RENDER ─────────────────────────────────────────────────────────────────────
+function renderProducts(items, id) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  g.innerHTML = items.map(p => `
+    <div class="product-card" onclick="openProduct(${p.id})">
+      <div class="product-img-wrap">
+        <img src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="emoji-fallback" style="display:none">${p.emoji}</div>
+        ${p.badge ? `<span class="p-badge pb-${p.badge.toLowerCase()}">${p.badge}</span>` : ''}
+        <button class="p-fav" onclick="event.stopPropagation();toast('Added to wishlist!','❤️')">♡</button>
+      </div>
+      <div class="p-body">
+        <div class="p-seller"><span class="p-seller-dot" style="${p.verified?'':'background:#a0aec0'}"></span>${p.seller}${p.verified?' · ✓':''}</div>
+        <div class="p-name">${p.name}</div>
+        <div class="p-price-row">
+          <span class="p-price">R${p.price.toLocaleString()}</span>
+          ${p.original ? `<span class="p-orig">R${p.original.toLocaleString()}</span>` : ''}
+        </div>
+        <div class="p-foot">
+          <div class="p-rating"><span class="stars">${'★'.repeat(Math.floor(p.rating))}</span> ${p.rating} <span style="color:var(--text-soft)">(${p.reviews})</span></div>
+          <button class="add-cart" onclick="event.stopPropagation();addToCart(${p.id})">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderBulletin(items, id) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  g.innerHTML = items.map(b => `
+    <div class="bul-card">
+      <div class="bul-ico" style="background:${b.iconBg}">${b.icon}</div>
+      <div style="flex:1">
+        <div class="bul-type" style="color:${b.typeColor}">${b.type}</div>
+        <div class="bul-title">${b.title}</div>
+        <div class="bul-desc">${b.desc}</div>
+        <div class="bul-meta"><span>${b.author}</span><span class="bul-dot"></span><span>${b.date}</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderVendors(items, id) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  g.innerHTML = items.map(v => `
+    <div class="v-card" onclick="toast('Viewing ${v.name}','🏪')">
+      <div class="v-avatar" style="background:${v.color}">${v.emoji}</div>
+      <div class="v-name">${v.name}</div>
+      <div class="v-type">${v.type}</div>
+      <div class="v-stats"><span>⭐ ${v.rating}</span><span>📦 ${v.listings}</span></div>
+    </div>
+  `).join('');
+}
+
+// ── CART ──────────────────────────────────────────────────────────────────────
+function addToCart(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  const ex = cart.find(x => x.id === id);
+  if (ex) ex.qty++;
+  else cart.push({...p, qty:1});
+  updateCart();
+  toast(`${p.name} added!`, '🛍️');
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  updateCart();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty < 1) removeFromCart(id);
+  else updateCart();
+}
+
+function updateCart() {
+  const total = cart.reduce((s,i) => s + i.qty, 0);
+  const el = document.getElementById('cartCount');
+  el.textContent = total;
+  el.style.display = total > 0 ? 'flex' : 'none';
+  document.getElementById('cartHdrCount').textContent = total > 0 ? `(${total} item${total>1?'s':''})` : '';
+  renderCart();
+}
+
+function renderCart() {
+  const body = document.getElementById('cartBody');
+  const ftr = document.getElementById('cartFtr');
+  if (cart.length === 0) {
+    body.innerHTML = `<div class="cart-empty"><div class="e-ico">🛒</div><p>Your cart is empty.<br>Browse listings to add items.</p></div>`;
+    ftr.innerHTML = '';
+    return;
+  }
+  body.innerHTML = cart.map(i => `
+    <div class="c-item">
+      <div class="c-item-img"><img src="${i.img}" alt="${i.name}" onerror="this.outerHTML='<span style=font-size:28px>${i.emoji}</span>'">${i.emoji}</div>
+      <div class="c-info">
+        <div class="c-name">${i.name}</div>
+        <div class="c-price">R${(i.price*i.qty).toLocaleString()}</div>
+        <div class="c-qty">
+          <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+          <span class="qty-n">${i.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+          <button class="c-rm" onclick="removeFromCart(${i.id})">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  const sub = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const fee = Math.round(sub * 0.02);
+  ftr.innerHTML = `
+    <div class="cart-row"><span>Subtotal</span><span>R${sub.toLocaleString()}</span></div>
+    <div class="cart-row"><span>Service fee (2%)</span><span>R${fee.toLocaleString()}</span></div>
+    <div class="cart-row cart-total"><span>Total</span><span>R${(sub+fee).toLocaleString()}</span></div>
+    <button class="checkout-btn" onclick="doCheckout()">Proceed to Checkout →</button>
+  `;
+}
+
+function toggleCart() {
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+function doCheckout() {
+  if (!currentUser) { toggleCart(); setTimeout(showAuth, 300); return; }
+  cart = [];
+  updateCart();
+  toggleCart();
+  toast('Order placed! Payment secured via PayFast.', '✅');
+}
+
+// ── PRODUCT MODAL ──────────────────────────────────────────────────────────────
+function openProduct(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  currentProd = p;
+  document.getElementById('pmImg').innerHTML = `<img src="${p.img}" alt="${p.name}" onerror="this.outerHTML='<div class=pm-emoji>${p.emoji}</div>'">`;
+  document.getElementById('pmBadges').innerHTML = p.tags.map(t=>`<span class="pm-tag">${t}</span>`).join('');
+  document.getElementById('pmPrice').textContent = `R${p.price.toLocaleString()}`;
+  document.getElementById('pmOrig').textContent = p.original ? `R${p.original.toLocaleString()}` : '';
+  document.getElementById('pmSeller').innerHTML = `<span class="pm-seller-chip">${p.verified?'✓ ':''} ${p.seller}</span> ${'★'.repeat(Math.floor(p.rating))} ${p.rating} (${p.reviews} reviews)`;
+  document.getElementById('pmDesc').textContent = p.desc;
+  document.getElementById('pmAddBtn').onclick = () => { addToCart(p.id); document.getElementById('prodModalOverlay').classList.remove('open'); };
+  document.getElementById('prodModalOverlay').classList.add('open');
+}
+
+function closeProdModal(e) {
+  if (e.target === document.getElementById('prodModalOverlay'))
+    document.getElementById('prodModalOverlay').classList.remove('open');
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+function showAuth() { document.getElementById('authOverlay').classList.add('open'); }
+function closeAuth(e) { if (e.target === document.getElementById('authOverlay')) document.getElementById('authOverlay').classList.remove('open'); }
+
+function authSwitch(type, btn) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  buildAuthForm(type);
+}
+
+function buildAuthForm(type) {
+  const el = document.getElementById('authBody');
+  if (type === 'login') {
+    el.innerHTML = `
+      <div class="form-group"><label class="form-label">University Email</label><input class="form-input" id="lEmail" type="email" placeholder="yourname@university.ac.za"></div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="lPass" type="password" placeholder="••••••••"></div>
+      <button class="submit-btn" onclick="doLogin()">Sign In</button>
+      <p style="text-align:center;font-size:12px;color:var(--text-soft);margin-top:12px">Forgot password? <span style="color:var(--green);cursor:pointer">Reset here</span></p>
+    `;
+  } else {
+    el.innerHTML = `
+      <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="rName" placeholder="e.g. Thabo Nkosi"></div>
+      <div class="form-group"><label class="form-label">University Email</label><input class="form-input" id="rEmail" type="email" placeholder="yourname@university.ac.za"></div>
+      <div class="form-group"><label class="form-label">Role</label><select class="form-input" id="rRole"><option>Student</option><option>Faculty</option><option>Vendor</option><option>Resident</option></select></div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="rPass" type="password" placeholder="Min. 8 characters"></div>
+      <button class="submit-btn" onclick="doRegister()">Create Account</button>
+      <p style="text-align:center;font-size:12px;color:var(--text-soft);margin-top:12px">By registering you agree to our <span style="color:var(--green);cursor:pointer">Community Rules</span></p>
+    `;
+  }
+}
+
+function doLogin() {
+  const email = document.getElementById('lEmail').value;
+  const pass = document.getElementById('lPass').value;
+  if (!email || !pass) { toast('Please fill in all fields','⚠️','warn'); return; }
+  if (!email.includes('@')) { toast('Please use your university email','⚠️','warn'); return; }
+  currentUser = {name: email.split('@')[0].replace('.',' ').replace(/\b\w/g,c=>c.toUpperCase()), email, role:'Student'};
+  updateProfileUI();
+  document.getElementById('authOverlay').classList.remove('open');
+  toast(`Welcome back, ${currentUser.name}!`, '👋');
+}
+
+function doRegister() {
+  const name = document.getElementById('rName').value;
+  const email = document.getElementById('rEmail').value;
+  const role = document.getElementById('rRole').value;
+  const pass = document.getElementById('rPass').value;
+  if (!name || !email || !pass) { toast('Please fill in all fields','⚠️','warn'); return; }
+  if (!email.includes('@')) { toast('Please use a university email','⚠️','warn'); return; }
+  if (pass.length < 8) { toast('Password must be at least 8 characters','⚠️','warn'); return; }
+  currentUser = {name, email, role};
+  updateProfileUI();
+  document.getElementById('authOverlay').classList.remove('open');
+  toast(`Account created! Welcome, ${name}!`, '🎉');
+}
+
+function updateProfileUI() {
+  if (!currentUser) return;
+  document.getElementById('profileName').textContent = currentUser.name;
+  document.getElementById('profileRole').textContent = currentUser.role;
+  document.getElementById('profileEmail').textContent = currentUser.email;
+  const ini = currentUser.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('profileIni').textContent = ini;
+  document.getElementById('profileContent').innerHTML = `<p style="font-size:14px;color:var(--text-soft)">You have no active listings yet. <span style="color:var(--green);cursor:pointer;font-weight:600" onclick="showPage('sell')">Create your first listing →</span></p>`;
+}
+
+// ── SELL ──────────────────────────────────────────────────────────────────────
+function submitListing() {
+  const t = document.getElementById('listTitle').value;
+  const c = document.getElementById('listCat').value;
+  const p = document.getElementById('listPrice').value;
+  if (!t || !c || !p) { toast('Please fill in all required fields','⚠️','warn'); return; }
+  if (!currentUser) { showAuth(); return; }
+  toast('Listing published successfully!', '🎉');
+  document.getElementById('listTitle').value = '';
+  document.getElementById('listPrice').value = '';
+  document.getElementById('listDesc').value = '';
+}
+
+// ── SEARCH & FILTER ───────────────────────────────────────────────────────────
+function handleSearch(q) {
+  q = q.toLowerCase();
+  const filtered = PRODUCTS.filter(p =>
+    (activeCat === 'All' || p.category === activeCat) &&
+    (p.name.toLowerCase().includes(q) || p.seller.toLowerCase().includes(q) || p.tags.some(t=>t.toLowerCase().includes(q)))
+  );
+  renderProducts(filtered, 'productGrid');
+  showPage('home');
+}
+
+function filterCat(cat, btn) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = (cat === 'All' ? PRODUCTS : PRODUCTS.filter(p => p.category === cat))
+    .filter(p => !q || p.name.toLowerCase().includes(q) || p.tags.some(t=>t.toLowerCase().includes(q)));
+  renderProducts(filtered, 'productGrid');
+  showPage('home');
+}
+
+// ── NAV ───────────────────────────────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-'+name);
+  if (pg) { pg.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+  // sync nav links
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+}
+
+function setActive(el) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function profileTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const el = document.getElementById('profileContent');
+  if (!currentUser) { el.innerHTML = '<p style="font-size:14px;color:var(--text-soft)">Please sign in to view this section.</p>'; return; }
+  if (tab === 'listings') el.innerHTML = '<p style="font-size:14px;color:var(--text-soft)">No active listings. <span style="color:var(--green);cursor:pointer;font-weight:600" onclick="showPage(\'sell\')">Create one →</span></p>';
+  else if (tab === 'purchases') el.innerHTML = '<p style="font-size:14px;color:var(--text-soft)">No purchase history yet.</p>';
+  else if (tab === 'wishlist') el.innerHTML = '<p style="font-size:14px;color:var(--text-soft)">Your wishlist is empty.</p>';
+  else el.innerHTML = `
+    <div style="max-width:400px">
+      <div class="form-group"><label class="form-label">Display Name</label><input class="form-input" value="${currentUser.name}"></div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" value="${currentUser.email}" disabled style="opacity:.6"></div>
+      <div class="form-group"><label class="form-label">Role</label><input class="form-input" value="${currentUser.role}" disabled style="opacity:.6"></div>
+      <button class="submit-btn" style="max-width:200px;padding:11px 28px" onclick="toast('Settings saved!','✅')">Save Changes</button>
+    </div>
+  `;
+}
+
+// ── TOAST ──────────────────────────────────────────────────────────────────────
+function toast(msg, icon='✅', type='') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.innerHTML = `<span style="font-size:17px">${icon}</span><span>${msg}</span>`;
+  c.appendChild(t);
+  setTimeout(() => { t.style.transition='opacity .3s'; t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 3000);
+}
+
+// ── START ──────────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
